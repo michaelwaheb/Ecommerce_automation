@@ -1,9 +1,43 @@
 package tests;
 
 import base.BaseTest;
+import org.testng.annotations.Test;
+import Data.TestData;
+import Models.LoginData;
 
 public class AddItemstocartTest extends BaseTest
 {
+    @Test
+    public  void openSigninPage()
+    {
+        new pages.HomePage(driver).OpenSigninPage();
+    }
+    @Test(dependsOnMethods = "openSigninPage", dataProvider = "LoginData", dataProviderClass = TestData.class)
+    public  void performLogin(LoginData loginData)
+  {
+      new pages.LoginPage(driver).enterusername(loginData.getUsername())
+              .enterpassword(loginData.getPassword())
+              .clicksigninbutton();
+  }
+    @Test(dependsOnMethods = "performLogin")
+    public void chooseVideoGamesCategory()
+    {
+        new pages.HomePage(driver).OpenleftSideAllMenu().SelectAllVideoGamesCategory();
+    }
+    @Test(dependsOnMethods = "chooseVideoGamesCategory")
+    public void filterAndSortTheResults()
+    {
+        new pages.HomePage(driver)
+                .FilterByFreeShipping()
+                .FilterByNewCondition()
+                .OpenTheSortMenu()
+                .SortByPriceHighToLow();
+    }
+    //@Test(dependsOnMethods = "chooseAllVideoGamesCategory")
+    //public void chooseAllVideoGamesCategory()
+    //{
+      //  new pages.HomePage(driver).OpenleftsideAllmenu().selectallvideogamescategory();
+    //}
 //    AllureLifecycle lifecycle = Allure.getLifecycle();
 //
 //    //Test case to validate lite package with price and currency for three countries

@@ -26,11 +26,11 @@ public class LoginPage extends BasePage
     }
 
     @Step("Enter username")
-    //@Test(dataProvider = "LoginData", dataProviderClass = TestData.class)
+
     public LoginPage enterusername(String username)
     {
-        filldata(Username, username)
-                .click(ContinueButton);
+        filldata(Username, username);
+        click(ContinueButton);
         return new LoginPage(driver);
     }
     @Step("Enter password")

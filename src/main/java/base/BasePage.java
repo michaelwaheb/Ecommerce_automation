@@ -1,36 +1,54 @@
 package base;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.HomePage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.Duration;
 
-public class BasePage
+public abstract class BasePage
 {
     protected WebDriver driver;
+    public WebDriverWait wait ;
 
     public BasePage(WebDriver driver)
     {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
     }
 
-    public BasePage click(By locator)
+    public void click(By locator)
     {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         driver.findElement(locator).click();
-        return new BasePage(driver);
+    }
+
+    public WebElement waitForElementToBeClickable(By locator)
+    {
+        return wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
+    public void clickElementUsingJavaScript(By locator)
+    {
+        WebElement element = waitForElementToBeClickable(locator);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
     }
     //public BasePage gettext(By locator)
     //{
         //driver.findElement(locator).getText();
         //return new BasePage(driver);
     //}
-    public BasePage filldata (By locator,String data)
+    public void filldata (By locator,String data)
     {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         driver.findElement(locator).sendKeys(data);
-        return new BasePage(driver);
     }
 
 

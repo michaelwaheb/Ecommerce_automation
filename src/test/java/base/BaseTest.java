@@ -10,7 +10,7 @@ import utils.Functions;
 import java.io.IOException;
 
 public class BaseTest {
-    protected WebDriver driver;
+     protected WebDriver driver;
 
 
 
@@ -18,7 +18,7 @@ public class BaseTest {
     public void setup() {
         driver = new ChromeDriver();
         // Navigate to a website
-        driver.get("https://www.amazon.eg/");
+        driver.get("https://www.amazon.eg/?language=en_AE");
         System.out.println("Session started");
         //Mazimize current window
         driver.manage().window().maximize();
