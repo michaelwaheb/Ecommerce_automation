@@ -7,22 +7,24 @@ import Models.LoginData;
 
 public class AddItemstocartTest extends BaseTest
 {
+//    @Test
+//    public  void openSigninPage()
+//    {
+//        new pages.HomePage(driver).OpenSigninPage();
+//    }
+//    @Test(dependsOnMethods = "openSigninPage", dataProvider = "LoginData", dataProviderClass = TestData.class)
+//    public  void performLogin(LoginData loginData)
+//  {
+//      new pages.LoginPage(driver).enterusername(loginData.getUsername())
+//              .enterpassword(loginData.getPassword())
+//              .clicksigninbutton();
+//  }
     @Test
-    public  void openSigninPage()
-    {
-        new pages.HomePage(driver).OpenSigninPage();
-    }
-    @Test(dependsOnMethods = "openSigninPage", dataProvider = "LoginData", dataProviderClass = TestData.class)
-    public  void performLogin(LoginData loginData)
-  {
-      new pages.LoginPage(driver).enterusername(loginData.getUsername())
-              .enterpassword(loginData.getPassword())
-              .clicksigninbutton();
-  }
-    @Test(dependsOnMethods = "performLogin")
     public void chooseVideoGamesCategory()
     {
-        new pages.HomePage(driver).OpenleftSideAllMenu().SelectAllVideoGamesCategory();
+        new pages.HomePage(driver)
+                .OpenleftSideAllMenu()
+                .SelectAllVideoGamesCategory();
     }
     @Test(dependsOnMethods = "chooseVideoGamesCategory")
     public void filterAndSortTheResults()
@@ -32,6 +34,13 @@ public class AddItemstocartTest extends BaseTest
                 .FilterByNewCondition()
                 .OpenTheSortMenu()
                 .SortByPriceHighToLow();
+    }
+
+    @Test(dependsOnMethods = "filterAndSortTheResults")
+    public void addToCart()
+    {
+        new pages.HomePage(driver)
+                 .addProductsUnderPriceToCart(15000).OpenCartPage();
     }
     //@Test(dependsOnMethods = "chooseAllVideoGamesCategory")
     //public void chooseAllVideoGamesCategory()
