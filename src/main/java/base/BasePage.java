@@ -35,11 +35,13 @@ public abstract class BasePage
         WebElement element = waitForElementToBeClickable(locator);
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
     }
-    //public BasePage gettext(By locator)
-    //{
-        //driver.findElement(locator).getText();
-        //return new BasePage(driver);
-    //}
+    public String gettext(By locator)
+    {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+        return driver.findElement(locator).getText();
+
+
+    }
     public void filldata (By locator,String data)
     {
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator));

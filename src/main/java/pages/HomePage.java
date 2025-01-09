@@ -32,25 +32,25 @@ public class HomePage extends BasePage {
     }
 
     @Step("Open Sign in Page")
-    public HomePage OpenSigninPage() {
+    public HomePage openSigninPage() {
         click(SigninPage);
         return new HomePage(driver);
     }
 
     @Step("Open cart Page")
-    public HomePage OpenCartPage() {
-        click(cart);
+    public HomePage openCartPage() {
+        clickElementUsingJavaScript(cart);
         return new HomePage(driver);
     }
 
     @Step("Open left side All menu")
-    public HomePage OpenleftSideAllMenu() {
+    public HomePage openleftSideAllMenu() {
         click(Allmenu);
         return new HomePage(driver);
     }
 
     @Step("Select all Video Games Category")
-    public HomePage SelectAllVideoGamesCategory() {
+    public HomePage selectAllVideoGamesCategory() {
 
         click(ExpandCategorylist);
         click(VideoGamesCategory);
@@ -59,48 +59,54 @@ public class HomePage extends BasePage {
     }
 
     @Step("Filter By free shipping ")
-    public HomePage FilterByFreeShipping() {
+    public HomePage filterByFreeShipping() {
         click(FreeShippingCheck);
         return new HomePage(driver);
     }
 
     @Step("Filter By new condition")
-    public HomePage FilterByNewCondition() {
+    public HomePage filterByNewCondition() {
         clickElementUsingJavaScript(NewCondition);
         return new HomePage(driver);
     }
 
     @Step("open the sort menu")
-    public HomePage OpenTheSortMenu() {
+    public HomePage openTheSortMenu() {
         clickElementUsingJavaScript(SortMenu);
         return new HomePage(driver);
     }
 
     @Step("sort by price high to low")
-    public HomePage SortByPriceHighToLow() {
+    public HomePage sortByPriceHighToLow() {
         clickElementUsingJavaScript(SortByPriceHighToLow);
         return new HomePage(driver);
     }
 
     @Step("Add products priced under a specified amount to the cart")
-    public HomePage addProductsUnderPriceToCart(int maxPrice) {
-
+    public int addProductsUnderPriceToCart(int maxPrice) {
 
         List<WebElement> prices = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(ProductPrice));
+        int expectedCartCount = 0;
+        int totalPrice = 0;
 
         //Loop through prices, check condition, and add to cart if condition is met
         for (int i = 0; i < prices.size(); i++) {
             WebElement itemPrice = prices.get(i);
             String priceText = itemPrice.getText().replaceAll("[^0-9]", ""); // Remove any non-numeric characters
-            double price = Double.parseDouble(priceText);
+            int price = Integer.parseInt(priceText);
+
             if (price < maxPrice) {
-                itemPrice.click(); // Click the product
-                //clickElementUsingJavaScript(AddToCartButton);// Add to cart
+                // Click the product
+                itemPrice.click();
+               // Add to cart
                 click(AddToCartButton);
-                //addToCartButton.click();
+                // Increment the expected cart count
+                expectedCartCount++;
+                //Refuse Warranty message
                 if (isElementPresent(WarrantyMessage))
                 {
-                    clickElementUsingJavaScript(NoWarranty);// Click the "No Thanks" button to dismiss the message
+                    // Click the "No Thanks" button to dismiss the message
+                    clickElementUsingJavaScript(NoWarranty);
                 }
                 simpleWait(1);
                 // Navigate back to the results page by clicking back twice
@@ -113,6 +119,7 @@ public class HomePage extends BasePage {
             }
         }
 
-        return this;
+        return expectedCartCount;
+
     }
 }

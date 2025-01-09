@@ -1,9 +1,14 @@
 package tests;
 
 import base.BaseTest;
+import io.qameta.allure.Allure;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import Data.TestData;
 import Models.LoginData;
+import pages.CartPage;
+import pages.CheckoutPage;
+import pages.HomePage;
 
 public class AddItemstocartTest extends BaseTest
 {
@@ -23,79 +28,42 @@ public class AddItemstocartTest extends BaseTest
     public void chooseVideoGamesCategory()
     {
         new pages.HomePage(driver)
-                .OpenleftSideAllMenu()
-                .SelectAllVideoGamesCategory();
+                .openleftSideAllMenu()
+                .selectAllVideoGamesCategory();
     }
     @Test(dependsOnMethods = "chooseVideoGamesCategory")
     public void filterAndSortTheResults()
     {
         new pages.HomePage(driver)
-                .FilterByFreeShipping()
-                .FilterByNewCondition()
-                .OpenTheSortMenu()
-                .SortByPriceHighToLow();
+                .filterByFreeShipping()
+                .filterByNewCondition()
+                .openTheSortMenu()
+                .sortByPriceHighToLow();
     }
 
     @Test(dependsOnMethods = "filterAndSortTheResults")
-    public void addToCart()
+    public void addItemsToCartAndProceedToCheckout()
     {
-        new pages.HomePage(driver)
-                 .addProductsUnderPriceToCart(15000).OpenCartPage();
+        HomePage homePage = new HomePage(driver);
+        CartPage cart = new CartPage(driver);
+        int expectedCartCount = homePage.addProductsUnderPriceToCart(15000);
+        driver.navigate().refresh();
+        int actualCartCount = cart.actualCartCount();
+        Allure.step("Assertion to make sure that all products is already added to carts");
+        // Perform assertion to make sure that all products is already added to carts
+        Assert.assertEquals(actualCartCount, expectedCartCount, "The number of items in the cart does not match the expected count.");
+        new pages.HomePage(driver).openCartPage();
+        new CartPage(driver).proceedtocheckout();
     }
-    //@Test(dependsOnMethods = "chooseAllVideoGamesCategory")
-    //public void chooseAllVideoGamesCategory()
-    //{
-      //  new pages.HomePage(driver).OpenleftsideAllmenu().selectallvideogamescategory();
-    //}
-//    AllureLifecycle lifecycle = Allure.getLifecycle();
-//
-//    //Test case to validate lite package with price and currency for three countries
-//    @Test  (dataProvider = "LiteSubscriptionData", dataProviderClass = TestData.class)
-//    @Story("Validate lite package for countries")
-//    @Parameters({"expected country name", "countryid","Expected package type","price","currency"})
-//    public  void Validatelitepackageforcountries(String expectedcountryname,String countryid,String Expectedpackagetype,String price,String currency)
-//    {
-//    //change test names
-//        lifecycle.updateTestCase(testResult -> testResult.setName("Validate lite package for " + expectedcountryname));
-//
-//    new pages.HomePage(driver)
-//            .clickenglishlanguagebutton()
-//            .opencountriespopup()
-//            .selectcountry(countryid)
-//            .checklitepackagedetailsforcountries(expectedcountryname,Expectedpackagetype,price,currency);
-//    }
-//
-//    //Test case to validate classic package with price and currency for three countries
-//    @Test (dataProvider = "ClassicSubscriptionData", dataProviderClass = TestData.class)
-//    @Story("Validate classic package for countries")
-//    @Parameters({"expected country name", "countryid","Expected package type","price","currency"})
-//    public  void Validateclassicpackageforcountries(String expectedcountryname,String countryid,String Expectedpackagetype,String price,String currency)
-//    {
-//        //change tests names
-//        lifecycle.updateTestCase(testResult -> testResult.setName("Validate classic package for " + expectedcountryname));
-//
-//
-//        new pages.HomePage(driver)
-//                .clickenglishlanguagebutton()
-//                .opencountriespopup()
-//                .selectcountry(countryid)
-//                .checkclassicpackagedetailsforcountries(expectedcountryname,Expectedpackagetype,price,currency);
-//    }
-//
-//    //Test case to validate premium package with price and currency for three countries
-//    @Test (dataProvider = "PremiumSubscriptionData", dataProviderClass = TestData.class)
-//    @Story("Validate premium package for countries")
-//    @Parameters({"expected country name", "countryid","Expected package type","price","currency"})
-//    public  void ValidatePremiumpackageforcountries(String expectedcountryname,String countryid,String Expectedpackagetype,String price,String currency)
-//    {
-//        //change tests names
-//        lifecycle.updateTestCase(testResult -> testResult.setName("Validate premium package for " + expectedcountryname));
-//
-//        new pages.HomePage(driver)
-//                .clickenglishlanguagebutton()
-//                .opencountriespopup()
-//                .selectcountry(countryid)
-//                .checkPremiumpackagedetailsforcountries(expectedcountryname,Expectedpackagetype,price,currency);
-//    }
+    @Test(dependsOnMethods = "addItemsToCartAndProceedToCheckout",dataProvider = "AddressData", dataProviderClass = TestData.class)
+    public void addNewAddressAndChoosePaymentMethod (String fullName,String mobileNumber,String streetName,String buildingNumber,String citytxt,String districttxt)
+    {
+        new CheckoutPage(driver)
+                .noPrimemembership()
+                .addNewAddress()
+                .fillAddressForm(fullName,mobileNumber,streetName,buildingNumber,citytxt,districttxt);
+
+    }
+
 
 }
