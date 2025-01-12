@@ -1,23 +1,20 @@
-package base;
+package engine;
 
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import java.time.Duration;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.WebDriver;
 
-public abstract class BasePage
+public class Bot
 {
-    protected WebDriver driver;
-    public WebDriverWait wait ;
-
-    public BasePage(WebDriver driver)
+    private final WebDriver driver;
+    private final Wait<WebDriver> wait;
+    public Bot(WebDriver driver, Wait<WebDriver> wait)
     {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(3));
-
+        this.wait = wait;
     }
 
     public void click(By locator)
@@ -26,14 +23,14 @@ public abstract class BasePage
         driver.findElement(locator).click();
     }
 
-    public WebElement waitForElementToBeClickable(By locator)
-    {
-        return wait.until(ExpectedConditions.elementToBeClickable(locator));
-    }
+    //public WebElement waitForElementToBeClickable(By locator)
+    //{
+    //  return wait.until(ExpectedConditions.elementToBeClickable(locator));
+    //}
     public void clickElementUsingJavaScript(By locator)
     {
-        WebElement element = waitForElementToBeClickable(locator);
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+        WebElement elemnet = wait.until(ExpectedConditions.elementToBeClickable(locator));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", elemnet);
     }
     public String gettext(By locator)
     {

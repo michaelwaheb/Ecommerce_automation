@@ -1,35 +1,31 @@
-package base;
+package tests;
 
-import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import utils.Functions;
 
 import java.io.IOException;
 
 public class BaseTest {
-     protected WebDriver driver;
+      WebDriver driver;
 
 
-
-    @BeforeSuite
+    @BeforeClass
     public void setup() {
         driver = new ChromeDriver();
         // Navigate to a website
-        driver.get("https://www.amazon.eg/?language=en_AE");
-        System.out.println("Session started");
+        driver.navigate().to("https://www.amazon.eg/?language=en_AE");
         //Mazimize current window
         driver.manage().window().maximize();
     }
 
-    @AfterSuite
+    @AfterClass
     public void terminate()
     {
 
         driver.quit();
-        System.out.println("Session terminated");
 
 //Start then stop Allure serve after test finish
         try {

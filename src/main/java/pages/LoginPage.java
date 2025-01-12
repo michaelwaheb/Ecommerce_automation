@@ -1,23 +1,19 @@
 package pages;
 
-import base.BasePage;
-import Models.LoginData;
-import Data.TestData;
+import models.LoginData;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.Test;
 
 
 public class LoginPage extends BasePage
 {
 
     //Locators
-    private final By Username = By.id("ap_email");
-    private final By Password = By.id("ap_password");
+    private final By Username = By.xpath("//input[@id=\"ap_email_login\" and @type=\"email\" and @name=\"email\"]");
+    private final By Password = By.xpath("//input[@id=\"ap_password\" and @type=\"password\" and @name=\"password\"]");
     private final By ContinueButton = By.id("continue");
     private final By SigninButton = By.id("auth-signin-button");
-    private LoginData loginData;
 
 //Methods to interact
     public LoginPage(WebDriver driver)
@@ -29,21 +25,21 @@ public class LoginPage extends BasePage
 
     public LoginPage enterusername(String username)
     {
-        filldata(Username, username);
-        click(ContinueButton);
+        bot.filldata(Username, username);
+        bot.click(ContinueButton);
         return new LoginPage(driver);
     }
     @Step("Enter password")
     public LoginPage enterpassword(String password)
     {
-        filldata(Password,password);
+        bot.filldata(Password,password);
         return new LoginPage(driver);
     }
 
     @Step("Enter password")
     public LoginPage clicksigninbutton()
     {
-        click(SigninButton);
+        bot.click(SigninButton);
         return new LoginPage(driver);
     }
 

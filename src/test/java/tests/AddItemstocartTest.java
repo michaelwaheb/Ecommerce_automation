@@ -1,30 +1,25 @@
 package tests;
 
-import base.BaseTest;
 import io.qameta.allure.Allure;
+import models.LoginData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import Data.TestData;
-import Models.LoginData;
+import resources.TestData;
 import pages.CartPage;
 import pages.CheckoutPage;
 import pages.HomePage;
 
 public class AddItemstocartTest extends BaseTest
 {
-//    @Test
-//    public  void openSigninPage()
-//    {
-//        new pages.HomePage(driver).OpenSigninPage();
-//    }
-//    @Test(dependsOnMethods = "openSigninPage", dataProvider = "LoginData", dataProviderClass = TestData.class)
-//    public  void performLogin(LoginData loginData)
-//  {
-//      new pages.LoginPage(driver).enterusername(loginData.getUsername())
-//              .enterpassword(loginData.getPassword())
-//              .clicksigninbutton();
-//  }
-    @Test
+    @Test(dataProvider = "LoginData", dataProviderClass = TestData.class)
+    public  void signIn(LoginData loginData)
+  {
+      new pages.HomePage(driver).openSigninPage();
+      new pages.LoginPage(driver).enterusername(loginData.getUsername())
+              .enterpassword(loginData.getPassword())
+              .clicksigninbutton();
+  }
+    @Test(dependsOnMethods = "signIn")
     public void chooseVideoGamesCategory()
     {
         new pages.HomePage(driver)
@@ -61,7 +56,8 @@ public class AddItemstocartTest extends BaseTest
         new CheckoutPage(driver)
                 .noPrimemembership()
                 .addNewAddress()
-                .fillAddressForm(fullName,mobileNumber,streetName,buildingNumber,citytxt,districttxt);
+                .fillAddressForm(fullName,mobileNumber,streetName,buildingNumber,citytxt,districttxt)
+                .saveAddress();
 
     }
 

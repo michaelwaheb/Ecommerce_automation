@@ -1,5 +1,4 @@
 package pages;
-import base.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import io.qameta.allure.Step;
@@ -14,7 +13,7 @@ public class HomePage extends BasePage {
     private final By Allmenu = By.id("nav-hamburger-menu");
     private final By ExpandCategorylist = By.cssSelector(".hmenu-item.hmenu-compressed-btn");
     private final By VideoGamesCategory = By.xpath("//a[@class=\"hmenu-item\" and @data-menu-id=\"16\"]/div[text()=\"Video Games\"]");
-    private final By AllVideoGames = By.xpath("//a[@class=\"hmenu-item\" and text()=\"All Video Games\"]");
+    private final By AllVideoGames = By.xpath("//a[text()=\"All Video Games\" and @href=\"/-/en/gp/browse.html?node=18022560031&ref_=nav_em_vg_all_0_2_16_2\"]");
     private final By FreeShippingCheck = By.cssSelector(".a-icon.a-icon-checkbox");
     private final By NewCondition = By.xpath("//span[@class=\"a-size-base a-color-base\" and text()=\"New\"]");
     private final By SortMenu = By.xpath("//span[@class=\"a-dropdown-label\" and text()=\"Sort by:\"]");
@@ -33,52 +32,53 @@ public class HomePage extends BasePage {
 
     @Step("Open Sign in Page")
     public HomePage openSigninPage() {
-        click(SigninPage);
+        bot.click(SigninPage);
         return new HomePage(driver);
     }
 
     @Step("Open cart Page")
     public HomePage openCartPage() {
-        clickElementUsingJavaScript(cart);
+        bot.clickElementUsingJavaScript(cart);
         return new HomePage(driver);
     }
 
     @Step("Open left side All menu")
     public HomePage openleftSideAllMenu() {
-        click(Allmenu);
+        bot.click(Allmenu);
         return new HomePage(driver);
     }
 
     @Step("Select all Video Games Category")
     public HomePage selectAllVideoGamesCategory() {
 
-        click(ExpandCategorylist);
-        click(VideoGamesCategory);
-        clickElementUsingJavaScript(AllVideoGames);
+        bot.click(ExpandCategorylist);
+        bot.click(VideoGamesCategory);
+        bot.simpleWait(2);
+        bot.clickElementUsingJavaScript(AllVideoGames);
         return new HomePage(driver);
     }
 
     @Step("Filter By free shipping ")
     public HomePage filterByFreeShipping() {
-        click(FreeShippingCheck);
+        bot.click(FreeShippingCheck);
         return new HomePage(driver);
     }
 
     @Step("Filter By new condition")
     public HomePage filterByNewCondition() {
-        clickElementUsingJavaScript(NewCondition);
+        bot.clickElementUsingJavaScript(NewCondition);
         return new HomePage(driver);
     }
 
     @Step("open the sort menu")
     public HomePage openTheSortMenu() {
-        clickElementUsingJavaScript(SortMenu);
+        bot.clickElementUsingJavaScript(SortMenu);
         return new HomePage(driver);
     }
 
     @Step("sort by price high to low")
     public HomePage sortByPriceHighToLow() {
-        clickElementUsingJavaScript(SortByPriceHighToLow);
+        bot.clickElementUsingJavaScript(SortByPriceHighToLow);
         return new HomePage(driver);
     }
 
@@ -99,19 +99,19 @@ public class HomePage extends BasePage {
                 // Click the product
                 itemPrice.click();
                // Add to cart
-                click(AddToCartButton);
+                bot.click(AddToCartButton);
                 // Increment the expected cart count
                 expectedCartCount++;
                 //Refuse Warranty message
-                if (isElementPresent(WarrantyMessage))
+                if (bot.isElementPresent(WarrantyMessage))
                 {
                     // Click the "No Thanks" button to dismiss the message
-                    clickElementUsingJavaScript(NoWarranty);
+                    bot.clickElementUsingJavaScript(NoWarranty);
                 }
-                simpleWait(1);
+                bot.simpleWait(1);
                 // Navigate back to the results page by clicking back twice
                 driver.navigate().back();
-                simpleWait(1);
+                bot.simpleWait(1);
                 driver.navigate().back();
 
                 // Refresh the list of price elements after navigating back

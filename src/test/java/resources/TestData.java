@@ -1,5 +1,5 @@
-package Data;
-import Models.LoginData;
+package resources;
+import models.LoginData;
 import org.testng.annotations.DataProvider;
 
 public class TestData {

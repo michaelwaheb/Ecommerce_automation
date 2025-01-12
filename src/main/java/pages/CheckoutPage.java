@@ -1,6 +1,5 @@
 package pages;
 
-import base.BasePage;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -31,33 +30,37 @@ public class CheckoutPage extends BasePage {
     @Step("Refuse Prime membership")
     public CheckoutPage noPrimemembership() {
         //Refuse Warranty message
-        if (isElementPresent(PrimeMessage)) {
+        if (bot.isElementPresent(PrimeMessage)) {
             // Click the "No Thanks" button to dismiss the message
-            clickElementUsingJavaScript(NoPrime);
+            bot.clickElementUsingJavaScript(NoPrime);
         }
         return new CheckoutPage(driver);
     }
 
     @Step("Add New Address")
     public CheckoutPage addNewAddress() {
-        click(ChangeAddress);
-        click(AddNewAddress);
+        bot.click(ChangeAddress);
+        bot.click(AddNewAddress);
 
         return new CheckoutPage(driver);
     }
     @Step("Fill Address Form")
     public CheckoutPage fillAddressForm(String fullName,String mobileNumber,String streetName,String buildingNumber,String citytxt,String districttxt)
     {
-         filldata(FullName,fullName);
-        filldata(MobileNumber,mobileNumber);
-        filldata(StreetName,streetName);
-        filldata(BuildingNumber,buildingNumber);
-        filldata(Citytxt,citytxt);
-        click(Autocompletechoice);
-        filldata(Districttxt,districttxt);
-        click(Autocompletechoice);
-        click(SaveAddressDetails);
+        bot.filldata(FullName,fullName);
+        bot.filldata(MobileNumber,mobileNumber);
+        bot.filldata(StreetName,streetName);
+        bot.filldata(BuildingNumber,buildingNumber);
+        bot.filldata(Citytxt,citytxt);
+        bot.clickElementUsingJavaScript(Autocompletechoice);
+        bot.filldata(Districttxt,districttxt);
+        bot.clickElementUsingJavaScript(Autocompletechoice);
 
+        return new CheckoutPage(driver);
+    }
+    @Step("Save Address")
+    public CheckoutPage saveAddress() {
+        bot.click(SaveAddressDetails);
         return new CheckoutPage(driver);
     }
 
