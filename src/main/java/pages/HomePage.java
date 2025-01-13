@@ -24,6 +24,7 @@ public class HomePage extends BasePage {
     private final By NoWarranty = By.id("attachSiNoCoverage");
     private final By cart = By.id("nav-cart-count-container");
 
+
 //Methods to interact
 
     public HomePage(WebDriver driver) {

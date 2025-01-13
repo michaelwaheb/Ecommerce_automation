@@ -2,6 +2,7 @@ package tests;
 
 import io.qameta.allure.Allure;
 import models.LoginData;
+import models.AddressData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import resources.TestData;
@@ -45,19 +46,24 @@ public class AddItemstocartTest extends BaseTest
         driver.navigate().refresh();
         int actualCartCount = cart.actualCartCount();
         Allure.step("Assertion to make sure that all products is already added to carts");
-        // Perform assertion to make sure that all products is already added to carts
         Assert.assertEquals(actualCartCount, expectedCartCount, "The number of items in the cart does not match the expected count.");
-        new pages.HomePage(driver).openCartPage();
-        new CartPage(driver).proceedtocheckout();
+        homePage.openCartPage();
+        cart.proceedtocheckout();
     }
     @Test(dependsOnMethods = "addItemsToCartAndProceedToCheckout",dataProvider = "AddressData", dataProviderClass = TestData.class)
-    public void addNewAddressAndChoosePaymentMethod (String fullName,String mobileNumber,String streetName,String buildingNumber,String citytxt,String districttxt)
+    public void addNewAddressAndChoosePaymentMethod (AddressData addressData)
     {
         new CheckoutPage(driver)
-                .noPrimemembership()
                 .addNewAddress()
-                .fillAddressForm(fullName,mobileNumber,streetName,buildingNumber,citytxt,districttxt)
-                .saveAddress();
+                .fillAddressForm(
+                        addressData.getFullName(),
+                        addressData.getMobileNumber(),
+                        addressData.getStreetName(),
+                        addressData.getBuildingNumber(),
+                        addressData.getCityTxt(),
+                        addressData.getDistrictTxt())
+                .saveAddress()
+                .chooseCashPaymentMethod();
 
     }
 

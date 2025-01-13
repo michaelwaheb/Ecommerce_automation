@@ -12,29 +12,17 @@ public class CheckoutPage extends BasePage {
     private final By StreetName = By.id("address-ui-widgets-enterAddressLine1");
     private final By BuildingNumber = By.id("address-ui-widgets-enter-building-name-or-number");
     private final By Citytxt = By.id("address-ui-widgets-enterAddressCity");
-    //private final By CityDropdowlistchoice = By.id("address-ui-widgets-autoCompleteResult-0");
     private final By Districttxt = By.id("address-ui-widgets-enterAddressDistrictOrCounty");
     private final By Autocompletechoice = By.id("address-ui-widgets-autoCompleteResult-0");
-    private final By SaveAddressDetails = By.cssSelector("a-button-input");
+    private final By SaveAddressDetails = By.xpath("//span[@id=\"checkout-primary-continue-button-id-announce\" and @class=\"a-button-text\" and contains(text(),\"Use this address\")]");
     private final By AddNewAddress = By.id("add-new-address-desktop-sasp-tango-link");
     private final By ChangeAddress = By.cssSelector(".a-link-normal.expand-panel-button.celwidget");
-    private final By PrimeMessage = By.id("prime-updp-container");
-    private final By NoPrime = By.id("prime-interstitial-nothanks-button");
+    private final By COD = By.xpath("//span[@class=\"a-color-base cod-suppressed-color a-text-bold\" and contains(text(),\"Cash on Delivery (COD)\")]");
 
 //Methods to interact
 
     public CheckoutPage(WebDriver driver) {
         super(driver);
-    }
-
-    @Step("Refuse Prime membership")
-    public CheckoutPage noPrimemembership() {
-        //Refuse Warranty message
-        if (bot.isElementPresent(PrimeMessage)) {
-            // Click the "No Thanks" button to dismiss the message
-            bot.clickElementUsingJavaScript(NoPrime);
-        }
-        return new CheckoutPage(driver);
     }
 
     @Step("Add New Address")
@@ -60,9 +48,17 @@ public class CheckoutPage extends BasePage {
     }
     @Step("Save Address")
     public CheckoutPage saveAddress() {
-        bot.click(SaveAddressDetails);
+        bot.clickElementUsingJavaScript(SaveAddressDetails);
         return new CheckoutPage(driver);
     }
+    @Step("Choose cash as payment method")
+    public CheckoutPage chooseCashPaymentMethod()
+    {
+        bot.click(COD);
+        return new CheckoutPage(driver);
+    }
+
+
 
 
 }

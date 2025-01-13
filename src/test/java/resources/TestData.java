@@ -1,5 +1,6 @@
 package resources;
 import models.LoginData;
+import models.AddressData;
 import org.testng.annotations.DataProvider;
 
 public class TestData {
@@ -10,13 +11,16 @@ public class TestData {
                 {new LoginData("mrw2000@hotmail.com", "2011861(m)")}
         };
     }
-        //Address details
-        @DataProvider(name = "AddressData")
-        public Object[][] Addressdetails() {
-            return new Object [][] {{"Michael","1223669950","Ramsis","Medical tower","Cairo","Cairo"}};
-        }
+
+    //Address details
+    @DataProvider(name = "AddressData")
+    public Object[][] Addressdetails() {
+        return new Object[][]{
+                {new AddressData("Michael", "1223669950", "Ramsis", "Medical tower", "Cairo", "Cairo")}
+        };
 
 
     }
+}
 
 
