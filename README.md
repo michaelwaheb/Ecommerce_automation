@@ -84,7 +84,7 @@ All dependencies are managed via Maven.
    ```bash
    mvn clean test
    ```
-**Kindly note before running test make sure you added a valid Test Mail and password for Amazon account in **:
+**Kindly note before running test make sure you added a valid Test Mail and password for Amazon account in src/test/java/resources/TestData.java **:
 3. **Allure Report generating automatically after run**:
   
 
