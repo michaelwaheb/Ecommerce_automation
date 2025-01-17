@@ -8,7 +8,7 @@ public class TestData {
     @DataProvider(name = "LoginData")
     public Object[][] providelogindata() {
         return new Object[][]{
-                {new LoginData("mrw2000@hotmail.com", "2011861(m)")}
+                {new LoginData("", "")}
         };
     }
 
