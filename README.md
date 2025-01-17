@@ -1,50 +1,94 @@
-# STC TV Subscription WebSite Automation
+# Amazon Automation Project
 
-This project automates the validation of subscription packages for the STC TV website for three different countries (Egypt, UAE, Iraq). 
-It uses Selenium WebDriver to navigate the subscription home page, extract subscription & country details, and validate the packages based on type, price, and currency. 
-Allure is used for generating detailed test reports.
+This project automates an e-commerce scenario on **Amazon Egypt (https://www.amazon.eg/)** using **Selenium**, **TestNG**, and **Maven**. The framework also integrates **Allure** for test reporting.
 
-## Data Validation
+## Automation Scenario
 
-- The test cases validate the subscription package types, prices, and currencies by comparing them against expected values defined in the CountrySubscriptionData class.
-- If any discrepancies are found, the tests will fail, and the details will be logged in the Allure test report.
+The project automates the following user journey:
 
-## Project Structure
-- *HomePage.java*: Handles locators & interactions with the subscription Homepage.
-- *CountrySubscriptionData*: Supplies Packages details (type,price currency) for each country for testing.
-- *SubscriptionPackagesTest.java*: Executes tests for subscription validation.
-  
+1. **Login to Amazon**: Open the website and log in.
+2. **Navigate to Video Games**: Open the "All" menu and navigate to "Video Games" > "All Video Games".
+3. **Apply Filters**: Use the filter menu to apply:
+   - **Free Shipping**
+   - **Condition: New**
+4. **Sort Products**: Sort the results by **Price: High to Low**.
+5. **Add Products to Cart**:
+   - Add all products priced below **15,000 EGP** to the cart.
+   - If no product is below this price, navigate to the next page.
+6. **Validate Cart**:
+   - Verify that all selected products are in the cart.
+7. **Checkout**:
+   - Add an address.
+   - Choose "Cash" as the payment method.
+8. **Verify Total Cost**:
+   - Ensure the total cost (including shipping fees, if applicable) matches the sum of the product prices.
+
+---
+
 ## Prerequisites
 
-- *Java 8+*
-- *Maven* (for dependency management)
-- *Selenium WebDriver*
-- *TestNG* (for running tests)
-- *Allure installtion (for generating reports)
-- *ChromeDriver* (ensure the correct path is set in the tests)
+### Software Requirements
 
-## Setup and Installation
+1. **Java Development Kit (JDK)**: Version 8 or later.
+2. **Maven**: For managing dependencies and running the tests.
+3. **Google Chrome** and **ChromeDriver**: Ensure ChromeDriver matches your browser version.
+4. **Allure**: For generating test reports.
 
-1. *Clone the Repository*
+### Dependencies
+The project uses the following libraries:
 
-    bash
-    git clone https://github.com/your-username/stc-tv-subscription-automation.git
-    cd stc-tv-subscription-automation
+- **Selenium**: For web automation.
+- **TestNG**: For test execution.
+- **Allure**: For test reporting.
 
-2. *Install Allure Commandline*
+All dependencies are managed via Maven.
 
-    To generate Allure reports, you need to install the Allure command-line tool:
+---
 
-    - *For Windows:*
+## Installation
 
-        - Download the Allure Commandline [from GitHub](https://github.com/allure-framework/allure2/releases) and add it to your system's PATH.
-        - Open CMD and run the following command (allure serve "Path\allure-results") or open execute Mavn goal from intellji ide and run (mvn allure:serve)
-         
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/michaelwaheb/Ecommerce_automation.git
+   cd Ecommerce_automation
+   ```
+
+2. **Open in IDE**:
+   - Import the project as a Maven project in your IDE.
+
+3. **Install Dependencies**:
+   - Maven will automatically resolve the dependencies when you load the `pom.xml` file. To force download:
+     ```bash
+     mvn clean install
+     ```
+
+4. **ChromeDriver Setup**:
+   - Place the appropriate `chromedriver` binary in your system PATH or update the driver path in the code.
+
+---
+
+## Configuration
+
+ **Allure Reporting**:
+   - Ensure Allure is installed:
+     ```bash
+     brew install allure # For macOS
+     choco install allure # For Windows
+     ```
+
+---
 
 ## Running the Tests
 
-### 1. Directly from the IDE
+1. **From IDE**:
+   - Right-click on the test class or package and select `Run`.
 
-- Open the project in IntelliJ IDEA (or your preferred IDE).
-- Right-click on the SubscriptionPackagesTest.java class.
-- Select "Run SubscriptionPackagesTest".
+2. **From Command Line**:
+   ```bash
+   mvn clean test
+   ```
+
+3. **Allure Report generating automatically after run**:
+  
+
+
