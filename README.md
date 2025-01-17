@@ -77,6 +77,8 @@ All dependencies are managed via Maven.
 
 ## Running the Tests
 
+**Kindly note before running the test make sure you added a valid Test Mail and password for the Amazon account in src/test/java/resources/TestData.java**
+
 1. **From IDE**:
    - Right-click on the test class or package and select `Run`.
 
@@ -84,8 +86,6 @@ All dependencies are managed via Maven.
    ```bash
    mvn clean test
    ```
-**Kindly note before running the test make sure you added a valid Test Mail and password for the Amazon account in src/test/java/resources/TestData.java**
-
 3. **Allure Report generating automatically after run**
   
 
