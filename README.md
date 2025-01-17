@@ -62,9 +62,6 @@ All dependencies are managed via Maven.
      mvn clean install
      ```
 
-4. **ChromeDriver Setup**:
-   - Place the appropriate `chromedriver` binary in your system PATH or update the driver path in the code.
-
 ---
 
 ## Configuration
@@ -87,7 +84,7 @@ All dependencies are managed via Maven.
    ```bash
    mvn clean test
    ```
-
+**Kindly note before running test make sure you added a valid Test Mail and password for Amazon account in **:
 3. **Allure Report generating automatically after run**:
   
 
