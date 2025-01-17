@@ -72,7 +72,9 @@ All dependencies are managed via Maven.
      brew install allure # For macOS
      choco install allure # For Windows
      ```
-**Ensure before running the test to add a valid Test Mail and password for the Amazon account in 'src/test/java/resources/TestData.java'**
+**Login Data**:
+   - Ensure before running the test to add a valid Test Mail and password for the Amazon account in 'src/test/java/resources/TestData.java'
+
 ---
 
 ## Running the Tests
