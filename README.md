@@ -88,7 +88,9 @@ All dependencies are managed via Maven.
    ```bash
    mvn clean test
    ```
-3. **Allure Report generating automatically after run**
+3. ## Generating and Accessing Allure Reports
+
+The project is configured to automatically generate Allure reports after running the tests. You don't need to manually run any additional commands for report generation. Once the tests are executed using Maven, the Allure report is available within the project directory and viewable.
   
 
 
